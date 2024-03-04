@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:advstory/src/contants/enums.dart';
 import 'package:advstory/src/model/story.dart';
 import 'package:advstory/src/model/story_position.dart';
