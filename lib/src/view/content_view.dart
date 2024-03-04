@@ -154,12 +154,14 @@ class ContentViewState extends State<ContentView> {
       body: Stack(
         children: [
           GestureDetector(
-            onLongPressDown: _handleDownPress,
+            /**
+             * onLongPressDown: _handleDownPress,
             onLongPressCancel: _provider!.controller.resume,
             onLongPressUp: _provider!.controller.resume,
             onLongPress: _provider!.controller.exactPause,
             onTapUp: _handleTapUp,
             onVerticalDragEnd: _handleVerticalDrag,
+            */
             child: PageView.builder(
               allowImplicitScrolling: _provider!.preloadContent,
               controller: _pageController,
