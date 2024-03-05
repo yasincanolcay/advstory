@@ -58,43 +58,38 @@ class _StoryViewState extends State<StoryView> {
             child: child,
           );
         },
-        child: GestureDetector(
-          onHorizontalDragUpdate: _handleDragUpdate,
-          onHorizontalDragEnd: _handleDragEnd,
-          onHorizontalDragCancel: _resetParams,
-          child: PageView.builder(
-            allowImplicitScrolling: _provider!.preloadStory,
-            physics: const NeverScrollableScrollPhysics(),
-            pageSnapping: false,
-            controller: _provider!.controller.storyController!,
-            // Added one more page to detect when user swiped past
-            // the last page
-            itemBuilder: (context, index) {
-              // If user swipes past the last page, return an empty view
-              // before closing story view.
-              if (index >= _provider!.controller.storyCount) {
-                return const SizedBox();
-              }
+        child: PageView.builder(
+          allowImplicitScrolling: _provider!.preloadStory,
+          physics: const NeverScrollableScrollPhysics(),
+          pageSnapping: false,
+          controller: _provider!.controller.storyController!,
+          // Added one more page to detect when user swiped past
+          // the last page
+          itemBuilder: (context, index) {
+            // If user swipes past the last page, return an empty view
+            // before closing story view.
+            if (index >= _provider!.controller.storyCount) {
+              return const SizedBox();
+            }
 
-              final ValueNotifier<Widget> content =
-                  ValueNotifier(_provider!.style());
+            final ValueNotifier<Widget> content =
+                ValueNotifier(_provider!.style());
 
-              () async {
-                final story = await _provider!.buildHelper.buildStory(index);
+            () async {
+              final story = await _provider!.buildHelper.buildStory(index);
 
-                content.value = ContentView(
-                  storyIndex: index,
-                  story: story,
-                );
-              }();
-
-              return ValueListenableBuilder<Widget>(
-                valueListenable: content,
-                builder: (context, value, child) => value,
+              content.value = ContentView(
+                storyIndex: index,
+                story: story,
               );
-            },
-            onPageChanged: _handlePageChange,
-          ),
+            }();
+
+            return ValueListenableBuilder<Widget>(
+              valueListenable: content,
+              builder: (context, value, child) => value,
+            );
+          },
+          onPageChanged: _handlePageChange,
         ),
       ),
     );
